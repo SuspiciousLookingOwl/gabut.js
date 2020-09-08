@@ -1,4 +1,5 @@
 module.exports = {
 	verbose: true,
-	rootDir: "./dist"
+	rootDir: "./dist",
+	testEnvironment: "node"
 };
