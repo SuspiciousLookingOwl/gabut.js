@@ -4,7 +4,7 @@ import { Message } from "discord.js";
 // import OtherExample from "some-other-module";
 
 
-export default {
+export = {
 	name: "[Your Command Name]",
 	description: "[Your Command Description]",
 	async execute(message: Message, args: string[]): Promise<void> {
