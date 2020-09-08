@@ -34,4 +34,3 @@ The template also includes `.spec.ts` file to get you started with unit testing 
 - [ ] Check jdoodle credit
 - [ ] Execute code from jdoodle API 
 - [ ] Display HTML when .html file is sent
-- [ ] Translate
