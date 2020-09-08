@@ -29,10 +29,13 @@ client.once("ready", () => {
 
 
 client.on("message", async message => {
+	console.log(PREFIX);
 	if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
 	const args = message.content.slice(PREFIX.length).trim().split(/ +/);
 	const command = (args.shift() as string).toLowerCase();
+
+	console.log(command);
 
 	if (!client.commands.has(command)) return;
 
@@ -40,7 +43,7 @@ client.on("message", async message => {
 		// Executing command dynamically by command name
 		client.commands.get(command)?.execute(message, args);
 	} catch (error) {
-		await message.channel.send("Command not found.");
+		await message.channel.send("Failed to execute the command.");
 	}
 });
 
