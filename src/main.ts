@@ -29,13 +29,10 @@ client.once("ready", () => {
 
 
 client.on("message", async message => {
-	console.log(PREFIX);
 	if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
 	const args = message.content.slice(PREFIX.length).trim().split(/ +/);
 	const command = (args.shift() as string).toLowerCase();
-
-	console.log(command);
 
 	if (!client.commands.has(command)) return;
 
