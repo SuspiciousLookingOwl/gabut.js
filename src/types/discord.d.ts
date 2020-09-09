@@ -5,7 +5,7 @@ declare module "discord.js" {
         commands: Collection<unknown, Command>
     }
 
-    interface Command {
+    export interface Command {
         name: string,
         description: string,
         execute: (message: Message, args: string[]) => void
