@@ -1,13 +1,12 @@
-import { Message } from "discord.js";
+import { Command } from "discord.js";
 // Add required dependencies here
 // import Example from "some-module";
 // import OtherExample from "some-other-module";
 
-
-export = {
+const command: Command = {
 	name: "[Your Command Name]",
 	description: "[Your Command Description]",
-	async execute(message: Message, args: string[]): Promise<void> {
+	async execute(message, args) {
 		// Put your code here
 
 		// const firstArg = args.shift();
@@ -18,3 +17,5 @@ export = {
 		// await message.channel.send("Something");
 	},
 };
+
+export = command;
