@@ -25,4 +25,4 @@ Then you can edit the copied `index.ts` inside `src/commands/command-name` folde
 
 The template also includes `.spec.ts` file to get you started with unit testing your command.
 
----
+It's preferable to create a new file for your command logic so your code is more testable. 
