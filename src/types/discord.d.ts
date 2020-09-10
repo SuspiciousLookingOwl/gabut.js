@@ -8,6 +8,8 @@ declare module "discord.js" {
     export interface Command {
         name: string,
         description: string,
+        allowedUsers?: string[],
+        allowedGuilds?: string[],
         execute: (message: Message, args: string[]) => void
     }
 }

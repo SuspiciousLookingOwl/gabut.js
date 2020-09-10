@@ -1,5 +1,5 @@
 import fs from "fs";
-import Discord from "discord.js";
+import Discord, { Command } from "discord.js";
 import "dotenv/config";
 
 
@@ -32,13 +32,23 @@ client.on("message", async message => {
 	if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
 	const args = message.content.slice(PREFIX.length).trim().split(/\r?\n| +/);
-	const command = (args.shift() as string).toLowerCase();
+	const commandName = (args.shift() as string).toLowerCase();
 
-	if (!client.commands.has(command)) return;
+	if (!client.commands.has(commandName)) return;
 
 	try {
+		const command = client.commands.get(commandName) as Command;
+		
+		if (
+			(command.allowedGuilds || command.allowedUsers) &&
+			((message.guild && !command.allowedGuilds?.includes(message.guild.id)) &&
+			(!command.allowedUsers?.includes(message.author.id)))
+		) {
+			return await message.channel.send("No permission to run this command");
+		}
+
 		// Executing command dynamically by command name
-		client.commands.get(command)?.execute(message, args);
+		command.execute(message, args);
 	} catch (error) {
 		await message.channel.send("Failed to execute the command.");
 	}
