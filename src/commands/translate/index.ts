@@ -1,20 +1,21 @@
-import { Message } from "discord.js";
-import axios from "axios";
+import { Command } from "discord.js";
 
-const URL = "https://guarded-lowlands-57340.herokuapp.com/";
+import translate from "./translate";
 
-export = {
+
+const command: Command = {
 	name: "tr",
 	description: "Translate sentences",
-	async execute(message: Message, args: string[]): Promise<void> {
+	async execute(message, args) {
 		const targetLanguage = args.shift();
-		const sentences = args.join(" ");
+		const string = args.join(" ");
 
-		if (!targetLanguage || !sentences) return;
+		if (!targetLanguage || !string) return;
 
-		const response = await axios.get(`${URL}?to=${encodeURIComponent(targetLanguage)}&text=${encodeURIComponent(sentences)}`);
-
-		await message.channel.send(response.data);
-		return response.data;
+		const translation = await translate(string, targetLanguage);
+		await message.channel.send(translation);
 	},
 };
+
+
+export = command;
