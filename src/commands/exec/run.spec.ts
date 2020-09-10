@@ -14,7 +14,7 @@ test("Test get language", () => {
 	expect(language.versionIndex).toBe(3);
 });
 
-// ! Temporary disabling this test because it requires jDoodle credit
+// ! Temporarily disabling this test because it requires jDoodle credit
 // test("Test run javascript code", async () => {
 // 	const response = await run("js", "console.log(1);");
 // 	expect(response.output.trim()).toBe("1");
