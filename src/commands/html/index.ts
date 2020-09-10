@@ -1,11 +1,8 @@
 import { Message } from "discord.js";
 import puppeteer from "puppeteer";
-import fs, { writeFile } from "fs";
+import fs from "fs";
 import { promisify } from "util";
 import axios from "axios";
-// Add required dependencies here
-// import Example from "some-module";
-// import OtherExample from "some-other-module";
 
 
 export = {
