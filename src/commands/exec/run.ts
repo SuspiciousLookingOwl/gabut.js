@@ -1,20 +1,8 @@
 import axios from "axios";
+import { JDoodleResponse, Language } from "./types";
+
 
 const URL = "https://api.jdoodle.com/v1/execute";
-
-interface JDoodleResponse {
-    output: string,
-    statusCode: number,
-    memory: number,
-    cpuTime: number,
-    error?: string
-}
-
-interface Language {
-    name: string,
-    alias: string[],
-    versionIndex: number
-}
 
 export default async function run(language: string, script: string): Promise<JDoodleResponse> {
 	const detectedLanguage = getLanguage(language);
