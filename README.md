@@ -25,12 +25,4 @@ Then you can edit the copied `index.ts` inside `src/commands/command-name` folde
 
 The template also includes `.spec.ts` file to get you started with unit testing your command.
 
-
-
 ---
-
-## Features to be added
-
-- [ ] Check jdoodle credit
-- [ ] Execute code from jdoodle API 
-- [ ] Display HTML when .html file is sent
