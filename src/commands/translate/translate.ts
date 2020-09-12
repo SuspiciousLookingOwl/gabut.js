@@ -1,9 +1,18 @@
-import axios from "axios";
+import googleTranslate from "@vitalets/google-translate-api";
 
-
-const URL = "https://guarded-lowlands-57340.herokuapp.com/";
 
 export default async function translate(string: string, targetLanguage = "id"): Promise<string> {
-	const response = await axios.get(`${URL}?to=${encodeURIComponent(targetLanguage)}&text=${encodeURIComponent(string)}`);
-	return response.data;
+	// Language is case sensitive, all is lower case
+	targetLanguage = targetLanguage.toLowerCase();
+
+	// For zn-CN and zh-TW
+	if (targetLanguage.split("-").length > 1) {
+		const targetLanguageSplit = targetLanguage.split("-");
+		targetLanguageSplit[1] = targetLanguageSplit[1].toUpperCase();
+		targetLanguage = targetLanguageSplit.join("-");
+	}
+
+	const response = await googleTranslate(string, {to: targetLanguage});
+
+	return response.text;
 }
