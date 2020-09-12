@@ -12,9 +12,17 @@ const command: Command = {
 
 		if (!targetLanguage || !string) return;
 
-		const translation = await translate(string, targetLanguage);
-		if (!translation) return await message.channel.send("No Translation Found.");
-		await message.channel.send(translation);
+		try {
+			const translation = await translate(string, targetLanguage);
+			if (!translation) return await message.channel.send("No Translation Found.");
+			await message.channel.send(translation);
+		} catch (err) {
+			if (err.code === 400) {
+				await message.channel.send("Invalid Language");
+			} else {
+				await message.channel.send("Failed to translate");
+			}
+		}
 	},
 };
 
