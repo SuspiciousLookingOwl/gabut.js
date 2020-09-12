@@ -12,6 +12,7 @@ const command: Command = {
 		if (!string) return;
 		
 		try {
+			const audio = [];
 			const definitions = await define(string);
 			for (const definition of definitions) {
 				const embed = new MessageEmbed();
@@ -37,12 +38,12 @@ const command: Command = {
 				}
 	
 				embed.setFooter("Powered by dictionaryapi.dev");
-				
-				await message.channel.send({
-					embed,
-					files: [...definition.phonetics.map(p => p.audio)],
-				});
+				audio.push(...definition.phonetics.map(p => p.audio));
+				await message.channel.send(embed);
 			} 
+			await message.channel.send({
+				files: Array.from(new Set(audio)),
+			});
 		} catch (err) {
 			await message.channel.send("No Definition Found");
 		}
