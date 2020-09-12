@@ -22,7 +22,7 @@ const command: Command = {
 		
 				let description = "";
 				for (const phonetic of definition.phonetics) {
-					description += `**${phonetic.text}**\r\n\r\n:sound: ${phonetic.audio}\r\n\u200B`;
+					description += `**${phonetic.text}**\r\n:sound: ${phonetic.audio}\r\n\u200B\r\n\u200B`;
 				}
 				embed.setDescription(description);
 		
