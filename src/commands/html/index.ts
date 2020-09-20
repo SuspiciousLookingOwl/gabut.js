@@ -9,16 +9,22 @@ export = {
 	name: "html",
 	description: "Send image preview from HTML",
 	async execute(message: Message, args: string[]): Promise<void> {
+		if (args.length === 0) return;
+
 		const attachments = message.attachments.array();
 		let html = "";
-		if (attachments.length === 0 || !attachments[0].url.endsWith(".html")) {
+		let url = "";
+
+		if (attachments.length === 1 && attachments[0].url.endsWith(".html")) {
+			const file = await axios.get(attachments[0].url);
+			html = file.data;			
+		} else if (args[0].startsWith("http")){
+			url = args.shift() || "";
+		} else {
 			const script = message.cleanContent.replace(`${process.env.PREFIX}${this.name}`  as string, "").replace(/```/g, "").trim();
 			const language = script.split(/\r?\n/)[0];
 			if (language.toLowerCase() !== "html") return;
 			html = script.slice(language.length);
-		} else {
-			const file = await axios.get(attachments[0].url);
-			html = file.data;
 		}
 		
 		const writeFile = promisify(fs.writeFile);
@@ -28,7 +34,7 @@ export = {
 		const random = Math.random().toString(36).substring(7);
 
 		try {
-			await writeFile(`${__dirname}/${random}.html`, html);
+			if (!url) await writeFile(`${__dirname}/${random}.html`, html);
 	
 			const browser = await puppeteer.launch({ headless: true });
 			const page = await browser.newPage();
@@ -37,7 +43,7 @@ export = {
 				width,
 				height
 			});
-			await page.goto(`${__dirname}/${random}.html`);
+			await page.goto(url ? url : `${__dirname}/${random}.html`);
 			await page.screenshot({
 				path: `${__dirname}/${random}.png`
 			});
@@ -48,7 +54,7 @@ export = {
 			console.log(err);
 			await message.channel.send("Something went wrong.");
 		} finally {
-			await unlink(`${__dirname}/${random}.html`);
+			if (!url) await unlink(`${__dirname}/${random}.html`);
 			await unlink(`${__dirname}/${random}.png`);
 		}
 	},
