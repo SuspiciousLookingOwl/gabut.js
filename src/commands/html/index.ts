@@ -4,6 +4,12 @@ import fs from "fs";
 import { promisify } from "util";
 import axios from "axios";
 
+let browser: puppeteer.Browser;
+console.log("Imported");
+
+(async () => {
+	browser = await puppeteer.launch({ headless: true });
+})();
 
 export = {
 	name: "html",
@@ -36,7 +42,6 @@ export = {
 		try {
 			if (!url) await writeFile(`${__dirname}/${random}.html`, html);
 	
-			const browser = await puppeteer.launch({ headless: true });
 			const page = await browser.newPage();
 	
 			await page.setViewport({
@@ -49,7 +54,7 @@ export = {
 			});
 	
 			await message.channel.send("", { files: [`${__dirname}/${random}.png`] });
-			await browser.close();
+			await page.close();
 		} catch (err) {
 			console.log(err);
 			await message.channel.send("Something went wrong.");
