@@ -5,7 +5,7 @@ import prettyBytes from "pretty-bytes";
 
 export = {
 	name: "compress",
-	description: "Compress an image from Discord",
+	description: "Compress an image sent from attachment",
 	async execute(message: Message): Promise<void> {
 
 		const image = Array.from(message.attachments)[0][1];
