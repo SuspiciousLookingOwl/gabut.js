@@ -38,6 +38,8 @@ client.on("message", async message => {
 
 	try {
 		const command = client.commands.get(commandName) as Command;
+
+		if (command.enabled === false) return;
 		
 		if (
 			(command.allowedGuilds || command.allowedUsers) &&
