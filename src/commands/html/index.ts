@@ -5,7 +5,6 @@ import { promisify } from "util";
 import axios from "axios";
 
 let browser: puppeteer.Browser;
-console.log("Imported");
 
 (async () => {
 	browser = await puppeteer.launch({ headless: true });
