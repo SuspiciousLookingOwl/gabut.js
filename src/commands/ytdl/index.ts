@@ -8,6 +8,12 @@ import scrapeYt from "scrape-yt";
 const command: Command = {
 	name: "ytdl",
 	description: "Download Youtube video as MP3",
+	args: [
+		{
+			name: "url",
+			description: "YouTube video URL"
+		}
+	],
 	async execute(message, args) {
 		const url = args.shift();
 		if (!url) return;

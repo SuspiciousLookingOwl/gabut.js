@@ -5,6 +5,12 @@ import run from "./run";
 const command: Command = {
 	name: "exec",
 	description: "Execute code from message",
+	args: [
+		{
+			name: "code",
+			description: "Code to execute with code block (```)"
+		}
+	],
 	async execute(message) {
 		let script = message.cleanContent.replace(`${process.env.PREFIX}${this.name}`  as string, "").replace(/```/g, "").trim();
 		const language = script.split(/\r?\n/)[0];

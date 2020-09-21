@@ -6,6 +6,12 @@ import define from "./define";
 const command: Command = {
 	name: "define",
 	description: "Define a word",
+	args: [
+		{
+			name: "word",
+			description: "Word to define"
+		}
+	],
 	async execute(message, args) {
 		const string = args.join(" ");
 
