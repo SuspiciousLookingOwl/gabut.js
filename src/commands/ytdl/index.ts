@@ -21,10 +21,6 @@ const command: Command = {
 		const unlink = promisify(fs.unlink);
 
 		try{
-			const options = {
-				quality: "18",
-				highWaterMark: 1024 * 1024 * 8
-			};
 
 			const start = Date.now();
 
@@ -32,14 +28,17 @@ const command: Command = {
 			const video = await scrapeYt.search(url, {type: "video"});
 			if (video.length > 0) filename = video[0].title + ".mp3";
 
-			const stream = ytdl(url, options);
+			
+			const stream = ytdl(url, { filter: "audioonly" });
 			message.channel.send("Please wait while I download the file for you");
-
+			
 			ffmpeg(stream)
 				.on("end", async () => {
+					console.log(1);
 					try {
 						const information = `<@!${message.author.id}> Downloaded in ${(Date.now() - start) / 1000}s`;
 						await message.channel.send(information, { files: [ `${__dirname}/${filename}` ]});
+						console.log(2);
 					} catch (err) {
 						if (err.message === "Request entity too large") {
 							await message.channel.send("File size is too big :frowning:");
