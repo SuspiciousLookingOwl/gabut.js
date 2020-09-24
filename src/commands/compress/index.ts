@@ -7,6 +7,7 @@ export = {
 	name: "compress",
 	description: "Compress an image sent from attachment",
 	async execute(message: Message): Promise<void> {
+		if (Array.from(message.attachments).length === 0) return;
 
 		const image = Array.from(message.attachments)[0][1];
 		if (!image.url.endsWith(".jpg") && !image.url.endsWith(".jpeg") && !image.url.endsWith(".png")) return;
