@@ -7,7 +7,7 @@ import axios from "axios";
 let browser: puppeteer.Browser;
 
 (async () => {
-	browser = await puppeteer.launch({ headless: true });
+	browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
 })();
 
 export = {
