@@ -1,5 +1,7 @@
 import { Command } from "discord.js";
-import { createWorker } from "tesseract.js";
+import tesseract from "node-tesseract-ocr";
+
+import downloadFile from "../../common/downloadFile";
 
 const command: Command = {
 	name: "ocr",
@@ -10,14 +12,13 @@ const command: Command = {
 		const image = Array.from(message.attachments)[0][1];
 		const url = image ? image.url : args.shift();
 		if (!url || (!url.endsWith(".jpg") && !url.endsWith(".jpeg") && !url.endsWith(".png"))) return;
-		const worker = createWorker();
-		
-		await worker.load();
-		await worker.loadLanguage("eng");
-		await worker.initialize("eng");
-		const { data: { text } } = await worker.recognize(url);
+
+		const filePath =  `${__dirname}/${url.split("/").splice(4,3).join(".")}`;
+		await downloadFile(url, filePath);
+		const text = await tesseract.recognize(filePath, {
+			lang: "eng"
+		});
 		await message.channel.send(text);
-		await worker.terminate();
 	},
 };
 
