@@ -18,16 +18,15 @@ const command: Command = {
 		const url = args.shift();
 		if (!url) return;
 
-		const unlink = promisify(fs.unlink);
-
+		
 		try{
-
 			const start = Date.now();
-
-			let filename = Math.random().toString(36).substring(7) + ".mp3";
 			const video = await scrapeYt.search(url, {type: "video"});
-			if (video.length > 0) filename = video[0].title + ".mp3";
+			if (video.length === 0) return message.channel.send("Video Not Found");
+			if (!video[0].duration || video[0].duration > 480) return message.channel.send("Video can't be longer than 8 minutes");
 
+			const unlink = promisify(fs.unlink);
+			const filename = video[0].title + ".mp3";
 			
 			const stream = ytdl(url, { filter: "audioonly" });
 			message.channel.send("Please wait while I download the file for you");
