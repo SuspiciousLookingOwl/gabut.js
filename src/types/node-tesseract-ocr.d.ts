@@ -5,6 +5,7 @@ declare module "node-tesseract-ocr" {
         lang: string;
         oem: number;
         psm: number;
+        [key: string]: any;
     }
 
     export function recognize(path: string, config: Partial<Config>): Promise<string>;
