@@ -26,7 +26,7 @@ const command: Command = {
 			if (!video[0].duration || video[0].duration > 480) return message.channel.send("Video can't be longer than 8 minutes");
 
 			const unlink = promisify(fs.unlink);
-			const filename = video[0].title + ".mp3";
+			const filename = video[0].title.substring(0,48) + ".mp3";
 			
 			const stream = ytdl(url, { filter: "audioonly" });
 			message.channel.send("Please wait while I download the file for you");
