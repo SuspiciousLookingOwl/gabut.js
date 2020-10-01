@@ -1,14 +1,12 @@
 import axios from "axios";
-import { JDoodleResponse, Language } from "./types";
+import { DenoTownResponse, JDoodleResponse, Language } from "./types";
 
-
-const URL = "https://api.jdoodle.com/v1/execute";
-
-export default async function run(language: string, script: string): Promise<JDoodleResponse> {
+export async function run(language: string, script: string): Promise<JDoodleResponse> {
 	const detectedLanguage = getLanguage(language);
 
 	if (!detectedLanguage.name) throw new Error("No Language Detected");
 
+	const URL = "https://api.jdoodle.com/v1/execute";
 	const data = {
 		clientId: process.env.JDOODLE_CLIENT_ID,
 		clientSecret: process.env.JDOODLE_CLIENT_SECRET,
@@ -16,10 +14,21 @@ export default async function run(language: string, script: string): Promise<JDo
 		language: detectedLanguage.name,
 		versionIndex: detectedLanguage.versionIndex
 	};
-    
+
 	const response = await axios.post(URL, data);
 	return response.data;
 }
+
+export async function runTs(script: string): Promise<DenoTownResponse> {
+	const URL = "https://deno.town/anon";
+	const data = {
+		module: Buffer.from(script).toString("base64")
+	};
+
+	const response = await axios.post(URL, data);
+	return response.data;
+}
+
 
 export function getLanguage(language: string): Language {
 	const supportedLanguages = [

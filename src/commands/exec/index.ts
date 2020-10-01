@@ -1,6 +1,6 @@
 import { Command } from "discord.js";
 
-import run from "./run";
+import {run, runTs} from "./run";
 
 const command: Command = {
 	name: "exec",
@@ -17,11 +17,27 @@ const command: Command = {
 		script = script.slice(language.length);
 
 		try {
-			const response = await run(language, script);
-			if (response.error) return await message.channel.send(`Failed to execute <:hanna:596068342431744020>, error: \r\n\r\n ${response.error.trim()}`);
-			if (response.output.length > 1900) return await message.channel.send(`Output too long (${response.output.length}) <:hanna:596068342431744020>`);
+			const isTypescript = ["ts", "typescript"].includes(language.toLowerCase());
+			
+			let response, output, time, error;
+
+			if (isTypescript) {
+				response = await runTs(script);
+				console.log(response);
+				output = response.stdout;
+				time = `${response.ms}ms`;
+				error = response.stderr === "Compile file:///tmp/mod.tsx\n" ? "" : response.stderr.replace(/(<([^>]+)>)/gi, "");
+			} else {
+				response = await run(language, script);
+				output = response.output;
+				time = response.cpuTime;
+				error = response.error;
+			}
+
+			if (error) return await message.channel.send(`Failed to execute <:hanna:596068342431744020>, error: \r\n\r\n${error.trim()}`);
+			if (output.length > 1950) return await message.channel.send(`Output too long (${output.length}) <:hanna:596068342431744020>`);
 	
-			await message.channel.send(`${response.output.trim()} \r\n\r\n\`Execution time: ${response.cpuTime}\``);
+			await message.channel.send(`${output.trim()} \r\n\r\n\`Execution time: ${time}\``);
 		} catch (err) {
 			return await message.channel.send("Failed to execute");
 		}

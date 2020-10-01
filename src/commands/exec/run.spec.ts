@@ -1,4 +1,4 @@
-import run, { getLanguage } from "./run";
+import { getLanguage, run } from "./run";
 import "dotenv/config";
 
 

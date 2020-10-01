@@ -6,6 +6,12 @@ export interface JDoodleResponse {
     error?: string
 }
 
+export interface DenoTownResponse {
+    stdout: string,
+    stderr: string,
+    ms: number
+}
+
 export interface Language {
     name: string,
     alias: string[],
