@@ -23,7 +23,6 @@ const command: Command = {
 
 			if (isTypescript) {
 				response = await runTs(script);
-				console.log(response);
 				output = response.stdout;
 				time = `${response.ms}ms`;
 				error = response.stderr === "Compile file:///tmp/mod.tsx\n" ? "" : response.stderr.replace(/(<([^>]+)>)/gi, "");
