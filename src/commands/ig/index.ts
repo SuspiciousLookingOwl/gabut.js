@@ -13,7 +13,7 @@ const command: Command = {
 		if (!user) return;
 
 		const embeds = [];
-		const webhook = await (message.channel as TextChannel).createWebhook(`Instagram Posts from ${user.username}`);
+		const webhook = await (message.channel as TextChannel).createWebhook(`[Instagram] ${user.username}`);
 
 		const embed = new MessageEmbed();
 		embed.setAuthor(`${user.fullName} (${user.username})`, user.profilePic, user.link);
