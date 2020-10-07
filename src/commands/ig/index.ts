@@ -1,6 +1,6 @@
 import { TextChannel } from "discord.js";
 import { Command, MessageEmbed } from "discord.js";
-import ig from "./ig"; 
+import ig from "./ig";
 
 const command: Command = {
 	name: "ig",
@@ -20,7 +20,7 @@ const command: Command = {
 		embed.setThumbnail(user.profilePicHD);
 		const description = `**${user.postsCount}** posts, ` + 
 							`**${user.subscribersCount}** followers, ` +
-							`**${user.subscribtions}** following\r\n\r\n` +
+							`**${user.subscriptions}** following\r\n\r\n` +
 							`${user.biography}\r\n${user.link}`;
 		embed.setDescription(description);
 		embeds.push(embed);

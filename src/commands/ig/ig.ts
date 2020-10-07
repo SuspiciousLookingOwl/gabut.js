@@ -1,5 +1,9 @@
 // From https://github.com/EdouardCourty/user-instagram
 import axios from "axios";
+import puppeteer from "puppeteer";
+import fs from "fs";
+import { promisify } from "util";
+import dotenv from "dotenv";
 
 const normalizeUrl = (string: string) => {
 	if (!string.match(/instagram\.com\/[^\/]*/)) {
@@ -15,6 +19,59 @@ const normalizePostUrl = (string: string) => {
 	return string += "/?__a=1";
 };
 
+const stringifyEnv = async (obj: dotenv.DotenvParseOutput) => {
+	let result = "";
+	for (const [key, value] of Object.entries(obj)) {
+		if (key) {
+			const line = `${key}=${String(value)}`;
+			result += line + "\n";
+		}
+	}
+	return result;
+};
+
+const getSessionId = async (username: string, password: string): Promise<string> => {
+	return new Promise((resolve, reject) => {
+		(async () => {
+			const writeFile = promisify(fs.writeFile);            
+			const env = dotenv.config().parsed;
+			if (!env) return reject(new Error(".env file not found"));
+			if (env.INSTAGRAM_SESSION_ID) return resolve(env.INSTAGRAM_SESSION_ID);
+
+			// Open Browser and Page, then go to login page
+			const browser = await puppeteer.launch();
+			const page = await browser.newPage();            
+			await page.goto("https://www.instagram.com/accounts/login/");
+            
+			//  Create listener and listen for received cookie
+			const client = await page.target().createCDPSession();
+			await client.send("Network.enable");
+			client.on("Network.responseReceivedExtraInfo", async (response) => {
+				if (!response || !response.headers) return;
+				if (!("set-cookie" in response.headers) || !response.headers["set-cookie"].includes("sessionid")) return;
+				const cookie = response.headers["set-cookie"];
+				const sessionId = cookie.split("sessionid=")[1].split(";")[0];
+				env.INSTAGRAM_SESSION_ID = sessionId;
+				await writeFile(".env", await stringifyEnv(env));
+				await browser.close();
+				return resolve(env.INSTAGRAM_SESSION_ID);
+			});
+            
+			// Wait for form to load, fill in username & password, then click Login button
+			await page.waitForSelector(".Igw0E > .-MzZI:nth-child(1) > ._9GP1n > .f0n8F > ._2hvTZ");
+			await page.click(".Igw0E > .-MzZI:nth-child(1) > ._9GP1n > .f0n8F > ._2hvTZ");
+			await page.type(".Igw0E > .-MzZI:nth-child(1) > ._9GP1n > .f0n8F > ._2hvTZ", username);
+			await page.type(".Igw0E > .-MzZI:nth-child(2) > ._9GP1n > .f0n8F > ._2hvTZ", password);
+			await page.waitForSelector("#loginForm > .Igw0E > .Igw0E > .sqdOP > .Igw0E");
+			await page.click("#loginForm > .Igw0E > .Igw0E > .sqdOP > .Igw0E");
+            
+			page.on("response", (response) => {
+				if (response.url() === "https://www.instagram.com/accounts/login/ajax/" && response.status() !== 200) reject(new Error("Failed to Login"));
+			});        
+		})();
+	});  
+};
+
 
 const getUserData = async (username: string) => {
 	const url = normalizeUrl(username);
@@ -22,7 +79,8 @@ const getUserData = async (username: string) => {
 		headers: {
 			"user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36",
 			"authority": "www.instagram.com",
-			"cache-control": "max-age=0"
+			"cache-control": "max-age=0",
+			"Cookie": `sessionid=${await getSessionId(process.env.INSTAGRAM_USERNAME as string, process.env.INSTAGRAM_PASSWORD as string)};`
 		}
 	};
 	const GQL = await axios.get(url, REQUEST_PARAMETERS);
@@ -33,7 +91,7 @@ const getUserData = async (username: string) => {
 			id: user.id,
 			biography: user.biography,
 			subscribersCount: user.edge_followed_by.count,
-			subscribtions: user.edge_follow.count,
+			subscriptions: user.edge_follow.count,
 			fullName: user.full_name,
 			highlightCount: user.highlight_reel_count,
 			isBusinessAccount: user.is_business_account,
