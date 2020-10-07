@@ -6,14 +6,14 @@ import { promisify } from "util";
 import dotenv from "dotenv";
 
 const normalizeUrl = (string: string) => {
-	if (!string.match(/instagram\.com\/[^\/]*/)) {
+	if (!string.match(/instagram\.com\/[^/]*/)) {
 		string = `https://www.instagram.com/${string}`;
 	}
 	return string += "/?__a=1";
 };
 
 const normalizePostUrl = (string: string) => {
-	if (!string.match(/instagram\.com\/p\/[^\/]*/)) {
+	if (!string.match(/instagram\.com\/p\/[^/]*/)) {
 		string = `https://www.instagram.com/p/${string}`;
 	}
 	return string += "/?__a=1";
