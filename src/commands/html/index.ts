@@ -39,7 +39,10 @@ export = {
 		const random = Math.random().toString(36).substring(7);
 
 		try {
-			if (!url) await writeFile(`${__dirname}/${random}.html`, html);
+			if (!url) {
+				url = `file://${__dirname}/${random}.html`;
+				await writeFile(`${__dirname}/${random}.html`, html);
+			}
 	
 			const page = await browser.newPage();
 	
@@ -47,7 +50,7 @@ export = {
 				width,
 				height
 			});
-			await page.goto(url ? url : `${__dirname}/${random}.html`);
+			await page.goto(url);
 			await page.screenshot({
 				path: `${__dirname}/${random}.png`
 			});
