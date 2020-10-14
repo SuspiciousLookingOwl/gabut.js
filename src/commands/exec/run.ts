@@ -39,7 +39,7 @@ export function getLanguage(language: string): Language {
 		},
 		{
 			name: "c",
-			alias: ["java"],
+			alias: ["c"],
 			versionIndex: 4
 		},
 		{
