@@ -26,9 +26,9 @@ export = {
 		} else if (args[0].startsWith("http")){
 			url = args.shift() || "";
 		} else {
-			const script = message.cleanContent.replace(`${process.env.PREFIX}${this.name}`  as string, "").replace(/```/g, "").trim();
+			const script = message.cleanContent.split("```")[1] || "";
+			if (!script) return;
 			const language = script.split(/\r?\n/)[0];
-			if (language.toLowerCase() !== "html") return;
 			html = script.slice(language.length);
 		}
 		
