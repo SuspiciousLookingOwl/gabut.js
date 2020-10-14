@@ -14,8 +14,6 @@ export = {
 	name: "html",
 	description: "Send image preview from HTML",
 	async execute(message: Message, args: string[]): Promise<void> {
-		if (args.length === 0) return;
-
 		const attachments = message.attachments.array();
 		let html = "";
 		let url = "";
@@ -23,7 +21,7 @@ export = {
 		if (attachments.length === 1 && attachments[0].url.endsWith(".html")) {
 			const file = await axios.get(attachments[0].url);
 			html = file.data;			
-		} else if (args[0].startsWith("http")){
+		} else if (args.length > 0 && args[0].startsWith("http")){
 			url = args.shift() || "";
 		} else {
 			const script = message.cleanContent.split("```")[1] || "";
