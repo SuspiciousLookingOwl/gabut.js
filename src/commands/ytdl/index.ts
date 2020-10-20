@@ -23,7 +23,7 @@ const command: Command = {
 			const start = Date.now();
 			const video = await scrapeYt.search(url, {type: "video"});
 			if (video.length === 0) return message.channel.send("Video Not Found");
-			if (!video[0].duration || video[0].duration > 480) return message.channel.send("Video can't be longer than 8 minutes");
+			if (!video[0].duration || video[0].duration > 600) return message.channel.send("Video can't be longer than 10 minutes");
 
 			const unlink = promisify(fs.unlink);
 			const filename = video[0].title.substring(0,48) + ".mp3";
