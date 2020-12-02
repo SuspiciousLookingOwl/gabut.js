@@ -50,9 +50,9 @@ client.on("message", async message => {
 		}
 
 		// Executing command dynamically by command name
-		command.execute(message, args);
+		await command.execute(message, args);
 	} catch (error) {
-		await message.channel.send("Failed to execute the command.");
+		await message.channel.send(`Failed to execute the command: ${error.message}`);
 	}
 });
 

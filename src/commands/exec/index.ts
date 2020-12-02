@@ -38,7 +38,7 @@ const command: Command = {
 	
 			await message.channel.send(`${output.trim()} \r\n\r\n\`Execution time: ${time}\``);
 		} catch (err) {
-			return await message.channel.send("Failed to execute");
+			throw new Error("Failed to execute code");
 		}
 	},
 };

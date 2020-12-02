@@ -56,8 +56,7 @@ export = {
 			await message.channel.send("", { files: [`${__dirname}/${random}.png`] });
 			await page.close();
 		} catch (err) {
-			console.log(err);
-			await message.channel.send("Something went wrong.");
+			throw new Error(err);
 		} finally {
 			if (!url) await unlink(`${__dirname}/${random}.html`);
 			await unlink(`${__dirname}/${random}.png`);

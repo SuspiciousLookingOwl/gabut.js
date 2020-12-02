@@ -51,7 +51,7 @@ const command: Command = {
 				files: Array.from(new Set(audio)),
 			});
 		} catch (err) {
-			await message.channel.send("No Definition Found");
+			throw new Error("No Definition Found");
 		}
 	},
 };

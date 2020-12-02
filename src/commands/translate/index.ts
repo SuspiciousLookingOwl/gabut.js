@@ -18,9 +18,9 @@ const command: Command = {
 			await message.channel.send(translation);
 		} catch (err) {
 			if (err.code === 400) {
-				await message.channel.send("Invalid Language");
+				throw new Error("Invalid Language");
 			} else {
-				await message.channel.send("Failed to translate");
+				throw new Error("Failed to translate");
 			}
 		}
 	},

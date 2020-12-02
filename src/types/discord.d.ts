@@ -17,6 +17,6 @@ declare module "discord.js" {
         enabled?: boolean,
         allowedUsers?: string[],
         allowedGuilds?: string[],
-        execute: (message: Message, args: string[]) => void
+        execute: (message: Message, args: string[]) => Promise<unknown>
     }
 }
