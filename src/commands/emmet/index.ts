@@ -5,7 +5,7 @@ const command: Command = {
 	name: "emmet",
 	description: "Generate HTML from emmet",
 	async execute(message, args) {
-		const emmet = args.join(" ");
+		const emmet = args.join(" ").replace(/\\/g, "");
 		if (!emmet) return;
 		try {
 			await message.channel.send(`\`\`\`html\r\n${expand(emmet)}\`\`\``);
