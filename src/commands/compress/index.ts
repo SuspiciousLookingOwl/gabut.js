@@ -6,11 +6,12 @@ import prettyBytes from "pretty-bytes";
 export = {
 	name: "compress",
 	description: "Compress an image sent from attachment",
-	async execute(message: Message): Promise<void> {
+	async execute(message: Message, args: string[]): Promise<void> {
 		if (Array.from(message.attachments).length === 0) return;
 
 		const image = Array.from(message.attachments)[0][1];
 		const imageExtension = image.url.split(".")[image.url.split(".").length-1];
+		const quality = parseInt(args.shift() || "85");
 		
 		if (![".jpg", ".jpeg", ".png"].includes(`.${imageExtension}`)) return;
 		
@@ -25,13 +26,14 @@ export = {
 		const oldSize = prettyBytes(image.size);
 
 		const output = await sharp(input).toFormat(imageExtension, {
-			quality: 85
+			quality
 		}).toBuffer();
 
 		const newSize = prettyBytes(Buffer.byteLength(output));
 		const end = new Date().getTime();
 
 		let content = `Time taken: **__${((end-start)/1000).toFixed(1)} seconds__**\r\n`;
+		content += `Quality: **__${quality}__**\r\n`;
 		content += `Old Size: **__${oldSize}__**\r\n`;
 		content += `New Size: **__${newSize}__**\r\n`;
         
