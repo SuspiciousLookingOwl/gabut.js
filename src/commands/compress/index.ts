@@ -10,8 +10,10 @@ export = {
 		if (Array.from(message.attachments).length === 0) return;
 
 		const image = Array.from(message.attachments)[0][1];
-		if (!image.url.endsWith(".jpg") && !image.url.endsWith(".jpeg") && !image.url.endsWith(".png")) return;
-
+		const imageExtension = image.url.split(".")[image.url.split(".").length-1];
+		
+		if (![".jpg", ".jpeg", ".png"].includes(`.${imageExtension}`)) return;
+		
 		const pleaseWaitMessage = await message.channel.send("Compressing, please wait!");
 
 		const start = new Date().getTime();
@@ -22,7 +24,7 @@ export = {
 		})).buffer());
 		const oldSize = prettyBytes(image.size);
 
-		const output = await sharp(input).toFormat("jpeg", {
+		const output = await sharp(input).toFormat(imageExtension, {
 			quality: 85
 		}).toBuffer();
 
