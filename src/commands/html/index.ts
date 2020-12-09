@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import puppeteer from "puppeteer";
 import fs from "fs";
 import { promisify } from "util";
-import axios from "axios";
+import fetch from "node-fetch";
 
 let browser: puppeteer.Browser;
 
@@ -19,8 +19,8 @@ export = {
 		let url = "";
 
 		if (attachments.length === 1 && attachments[0].url.endsWith(".html")) {
-			const file = await axios.get(attachments[0].url);
-			html = file.data;			
+			const file = await fetch(attachments[0].url);
+			html = await file.text();			
 		} else if (args.length > 0 && args[0].startsWith("http")){
 			url = args.shift() || "";
 		} else {

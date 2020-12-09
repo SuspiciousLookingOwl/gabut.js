@@ -1,4 +1,4 @@
-import axios from "axios";
+import fetch from "node-fetch";
 import { DenoTownResponse, JDoodleResponse, Language } from "./types";
 
 export async function run(language: string, script: string): Promise<JDoodleResponse> {
@@ -15,8 +15,11 @@ export async function run(language: string, script: string): Promise<JDoodleResp
 		versionIndex: detectedLanguage.versionIndex
 	};
 
-	const response = await axios.post(URL, data);
-	return response.data;
+	const response = await fetch(URL, {
+		body: JSON.stringify(data),
+		method: "POST"
+	});
+	return (await response.json()).data;
 }
 
 export async function runTs(script: string): Promise<DenoTownResponse> {
@@ -25,8 +28,11 @@ export async function runTs(script: string): Promise<DenoTownResponse> {
 		module: Buffer.from(script).toString("base64")
 	};
 
-	const response = await axios.post(URL, data);
-	return response.data;
+	const response = await fetch(URL, {
+		body: JSON.stringify(data),
+		method: "POST"
+	});
+	return (await response.json()).data;
 }
 
 

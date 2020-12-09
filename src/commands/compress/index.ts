@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import sharp from "sharp";
-import axios from "axios";
+import fetch from "node-fetch";
 import prettyBytes from "pretty-bytes";
 
 export = {
@@ -15,10 +15,14 @@ export = {
 		const pleaseWaitMessage = await message.channel.send("Compressing, please wait!");
 
 		const start = new Date().getTime();
-		const input = (await axios({ url: image.url, responseType: "arraybuffer" })).data;
+		const input = await ((await fetch(image.url, {
+			headers: {
+				"Content-Type": "arraybuffer"
+			}
+		})).buffer());
 		const oldSize = prettyBytes(image.size);
 
-		const output = await sharp(input as Buffer).toFormat("jpeg", {
+		const output = await sharp(input).toFormat("jpeg", {
 			quality: 85
 		}).toBuffer();
 

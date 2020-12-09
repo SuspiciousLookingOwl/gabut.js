@@ -1,5 +1,5 @@
 // From https://github.com/EdouardCourty/user-instagram
-import axios from "axios";
+import fetch from "node-fetch";
 import puppeteer from "puppeteer";
 import fs from "fs";
 import { promisify } from "util";
@@ -83,9 +83,12 @@ const getUserData = async (username: string) => {
 			"Cookie": `sessionid=${await getSessionId(process.env.INSTAGRAM_USERNAME as string, process.env.INSTAGRAM_PASSWORD as string)};`
 		}
 	};
-	const GQL = await axios.get(url, REQUEST_PARAMETERS);
+	const GQL = await (await fetch(url, {
+		headers: REQUEST_PARAMETERS.headers
+	})).json();
+	console.log(GQL);
 	if (GQL) {
-		const user = GQL.data.graphql.user;
+		const user = GQL.graphql.user;
 		return {
 			link: url.replace("/?__a=1", ""),
 			id: user.id,
@@ -144,9 +147,9 @@ const getPostData = async (shortcode: string) => {
 			"cache-control": "max-age=0"
 		}
 	};
-	const GQL = await axios.get(url, REQUEST_PARAMETERS);
+	const GQL = await (await fetch(url, REQUEST_PARAMETERS)).json();
 	if (GQL) {
-		const media_data = GQL.data.graphql.shortcode_media;
+		const media_data = GQL.graphql.shortcode_media;
 		const has_caption = media_data.edge_media_to_caption.edges.length > 0;
 		return {
 			link: url.replace("/?__a=1", ""),
