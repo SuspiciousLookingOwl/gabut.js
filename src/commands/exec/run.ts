@@ -17,9 +17,10 @@ export async function run(language: string, script: string): Promise<JDoodleResp
 
 	const response = await fetch(URL, {
 		body: JSON.stringify(data),
-		method: "POST"
+		method: "POST",
+		headers: { "Content-Type": "application/json" }
 	});
-	return (await response.json()).data;
+	return await response.json();
 }
 
 export async function runTs(script: string): Promise<DenoTownResponse> {
@@ -32,7 +33,7 @@ export async function runTs(script: string): Promise<DenoTownResponse> {
 		body: JSON.stringify(data),
 		method: "POST"
 	});
-	return (await response.json()).data;
+	return await response.json();
 }
 
 
