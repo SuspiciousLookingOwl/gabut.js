@@ -9,34 +9,46 @@ const command: Command = {
 	args: [
 		{
 			name: "code",
-			description: "Code to execute with code block (```)"
-		}
+			description: "Code to execute with code block (```)",
+		},
 	],
 	async execute(message) {
-		let script = message.cleanContent.replace(`${process.env.PREFIX}${this.name}`  as string, "").replace(/```/g, "").trim();
+		let script = message.cleanContent
+			.replace(`${process.env.PREFIX}${this.name}` as string, "")
+			.replace(/```/g, "")
+			.trim();
 		const language = script.split(/\r?\n/)[0];
 		script = script.slice(language.length);
 
 		try {
 			const isTypescript = ["ts", "typescript"].includes(language.toLowerCase());
-			
+
 			let response, output, time, error;
 
 			if (isTypescript) {
-				response = await run("typescript", script) as DenoTownResponse;
+				response = (await run("typescript", script)) as DenoTownResponse;
 				output = response.stdout;
 				time = `${response.ms}ms`;
-				error = response.stderr === "Compile file:///tmp/mod.tsx\n" ? "" : response.stderr.replace(/(<([^>]+)>)/gi, "");
+				error =
+					response.stderr === "Compile file:///tmp/mod.tsx\n"
+						? ""
+						: response.stderr.replace(/(<([^>]+)>)/gi, "");
 			} else {
-				response = await run(language, script) as JDoodleResponse;
+				response = (await run(language, script)) as JDoodleResponse;
 				output = response.output;
 				time = response.cpuTime;
 				error = response.error;
 			}
 
-			if (error) return await message.channel.send(`Failed to execute <:hanna:596068342431744020>, error: \r\n\r\n${error.trim()}`);
-			if (output.length > 1950) return await message.channel.send(`Output too long (${output.length}) <:hanna:596068342431744020>`);
-	
+			if (error)
+				return await message.channel.send(
+					`Failed to execute <:hanna:596068342431744020>, error: \r\n\r\n${error.trim()}`
+				);
+			if (output.length > 1950)
+				return await message.channel.send(
+					`Output too long (${output.length}) <:hanna:596068342431744020>`
+				);
+
 			await message.channel.send(`${output.trim()} \r\n\r\n\`Execution time: ${time}\``);
 		} catch (err) {
 			throw new Error("Failed to execute code");

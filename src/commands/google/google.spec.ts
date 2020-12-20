@@ -1,6 +1,5 @@
 import google from "./google";
 
-
 test("Test google function", async () => {
 	const url = google("some test");
 

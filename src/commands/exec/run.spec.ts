@@ -21,6 +21,6 @@ test("Test get language", () => {
 // });
 
 test("Test run typescript code", async () => {
-	const response = await run("typescript", "console.log(1);") as DenoTownResponse;
+	const response = (await run("typescript", "console.log(1);")) as DenoTownResponse;
 	expect(response.stdout).toBe("1\n");
 });

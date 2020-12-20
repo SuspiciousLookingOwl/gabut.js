@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
 import { DefinitionResult } from "./types";
 
-
 const URL = "https://api.dictionaryapi.dev/api/v2/entries/en";
 
 export default async function define(string: string): Promise<DefinitionResult[]> {

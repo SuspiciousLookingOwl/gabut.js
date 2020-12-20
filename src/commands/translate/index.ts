@@ -2,7 +2,6 @@ import { Command } from "discord.js";
 
 import translate from "./translate";
 
-
 const command: Command = {
 	name: "tr",
 	description: "Translate sentences",
@@ -25,6 +24,5 @@ const command: Command = {
 		}
 	},
 };
-
 
 export = command;

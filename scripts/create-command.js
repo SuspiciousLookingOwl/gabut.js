@@ -18,15 +18,18 @@ function copyTemplate(src, path, commandName = "", commandDescription = "") {
 	fs.readFile(src, "utf-8", (err, data) => {
 		if (err) throw err;
 		if (commandName) data = data.replace(/\[Your Command Name\]/g, commandName);
-		if (commandDescription) data = data.replace(/\[Your Command Description\]/g, commandDescription);
+		if (commandDescription)
+			data = data.replace(/\[Your Command Description\]/g, commandDescription);
 		fs.writeFile(path, data, "utf8", function (err) {
 			if (err) throw err;
 		});
-	}); 
+	});
 }
 
-function camelize(str){
+function camelize(str) {
 	let arr = str.split("-");
-	let capital = arr.map((item, index) => index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item);
+	let capital = arr.map((item, index) =>
+		index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item
+	);
 	return capital.join("");
 }

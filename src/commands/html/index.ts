@@ -20,8 +20,8 @@ export = {
 
 		if (attachments.length === 1 && attachments[0].url.endsWith(".html")) {
 			const file = await fetch(attachments[0].url);
-			html = await file.text();			
-		} else if (args.length > 0 && args[0].startsWith("http")){
+			html = await file.text();
+		} else if (args.length > 0 && args[0].startsWith("http")) {
 			url = args.shift() || "";
 		} else {
 			const script = message.cleanContent.split("```")[1] || "";
@@ -29,7 +29,7 @@ export = {
 			const language = script.split(/\r?\n/)[0];
 			html = script.slice(language.length);
 		}
-		
+
 		const writeFile = promisify(fs.writeFile);
 		const unlink = promisify(fs.unlink);
 		const width = parseInt(args.shift() || "") || 1920;
@@ -41,18 +41,18 @@ export = {
 				url = `file://${__dirname}/${random}.html`;
 				await writeFile(`${__dirname}/${random}.html`, html);
 			}
-	
+
 			const page = await browser.newPage();
-	
+
 			await page.setViewport({
 				width,
-				height
+				height,
 			});
 			await page.goto(url);
 			await page.screenshot({
-				path: `${__dirname}/${random}.png`
+				path: `${__dirname}/${random}.png`,
 			});
-	
+
 			await message.channel.send("", { files: [`${__dirname}/${random}.png`] });
 			await page.close();
 		} catch (err) {

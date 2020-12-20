@@ -1,45 +1,45 @@
 {
-  "name": "gabut",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/main.js",
-  "scripts": {
-    "dev": "./node_modules/.bin/tsc-watch --onSuccess \"node .\"",
-    "compile": "tsc",
-    "create-command": "node ./scripts/create-command.js",
-    "test": "jest",
-    "lint:check": "eslint .",
-    "lint:fix": "eslint . --fix"
-  },
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "@types/fluent-ffmpeg": "^2.1.15",
-    "@types/node-fetch": "^2.5.7",
-    "@vitalets/google-translate-api": "^4.0.0",
-    "discord.js": "^12.3.1",
-    "dotenv": "^8.2.0",
-    "emmet": "^2.2.1",
-    "fluent-ffmpeg": "^2.1.2",
-    "node-tesseract-ocr": "^2.0.0",
-    "nodeno-town": "^1.0.2",
-    "pretty-bytes": "^5.4.1",
-    "puppeteer": "^5.2.1",
-    "scrape-yt": "^1.4.7",
-    "sharp": "^0.26.0",
-    "ytdl-core": "^4.1.4"
-  },
-  "devDependencies": {
-    "@types/jest": "^26.0.13",
-    "@types/node": "^14.6.4",
-    "@types/puppeteer": "^3.0.1",
-    "@types/sharp": "^0.25.1",
-    "@typescript-eslint/eslint-plugin": "^4.1.0",
-    "@typescript-eslint/parser": "^4.1.0",
-    "eslint": "^7.8.1",
-    "jest": "^26.4.2",
-    "ts-mockito": "^2.6.1",
-    "tsc-watch": "^4.2.9",
-    "typescript": "^4.0.2"
-  }
+	"name": "gabut",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./dist/main.js",
+	"scripts": {
+		"dev": "./node_modules/.bin/tsc-watch --onSuccess \"node .\"",
+		"compile": "tsc",
+		"create-command": "node ./scripts/create-command.js",
+		"test": "jest",
+		"lint:check": "eslint .",
+		"lint:fix": "eslint . --fix"
+	},
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"@types/fluent-ffmpeg": "^2.1.15",
+		"@types/node-fetch": "^2.5.7",
+		"@vitalets/google-translate-api": "^4.0.0",
+		"discord.js": "^12.3.1",
+		"dotenv": "^8.2.0",
+		"emmet": "^2.2.1",
+		"fluent-ffmpeg": "^2.1.2",
+		"node-tesseract-ocr": "^2.0.0",
+		"nodeno-town": "^1.0.2",
+		"pretty-bytes": "^5.4.1",
+		"puppeteer": "^5.2.1",
+		"scrape-yt": "^1.4.7",
+		"sharp": "^0.26.0",
+		"ytdl-core": "^4.1.4"
+	},
+	"devDependencies": {
+		"@types/jest": "^26.0.13",
+		"@types/node": "^14.6.4",
+		"@types/puppeteer": "^3.0.1",
+		"@types/sharp": "^0.25.1",
+		"@typescript-eslint/eslint-plugin": "^4.1.0",
+		"@typescript-eslint/parser": "^4.1.0",
+		"eslint": "^7.8.1",
+		"jest": "^26.4.2",
+		"ts-mockito": "^2.6.1",
+		"tsc-watch": "^4.2.9",
+		"typescript": "^4.0.2"
+	}
 }

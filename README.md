@@ -19,10 +19,11 @@ I provided a script to easily create a new command file. You can run:
 ```
 npm run create-command -- command-name "Command Description"
 ```
+
 to easily create a new command file template inside [src/commands](src/commands) folder.
 
 Then you can edit the copied `index.ts` inside `src/commands/command-name` folder.
 
 The template also includes `.spec.ts` file to get you started with unit testing your command.
 
-It's preferable to create a new file for your command logic so your code is more testable. 
+It's preferable to create a new file for your command logic so your code is more testable.
