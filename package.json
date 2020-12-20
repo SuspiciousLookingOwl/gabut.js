@@ -22,6 +22,7 @@
     "emmet": "^2.2.1",
     "fluent-ffmpeg": "^2.1.2",
     "node-tesseract-ocr": "^2.0.0",
+    "nodeno-town": "^1.0.2",
     "pretty-bytes": "^5.4.1",
     "puppeteer": "^5.2.1",
     "scrape-yt": "^1.4.7",
