@@ -1,41 +1,32 @@
 import fetch from "node-fetch";
 import { DenoTownResponse, JDoodleResponse, Language } from "./types";
+import deno from "nodeno-town";
 
-export async function run(language: string, script: string): Promise<JDoodleResponse> {
+export async function run( language: string, script: string): Promise<JDoodleResponse | DenoTownResponse> {
 	const detectedLanguage = getLanguage(language);
 
 	if (!detectedLanguage.name) throw new Error("No Language Detected");
 
-	const URL = "https://api.jdoodle.com/v1/execute";
-	const data = {
-		clientId: process.env.JDOODLE_CLIENT_ID,
-		clientSecret: process.env.JDOODLE_CLIENT_SECRET,
-		script,
-		language: detectedLanguage.name,
-		versionIndex: detectedLanguage.versionIndex
-	};
+	if (detectedLanguage.name === "typescript") {
+		return await deno(script);
+	} else {
+		const URL = "https://api.jdoodle.com/v1/execute";
+		const data = {
+			clientId: process.env.JDOODLE_CLIENT_ID,
+			clientSecret: process.env.JDOODLE_CLIENT_SECRET,
+			script,
+			language: detectedLanguage.name,
+			versionIndex: detectedLanguage.versionIndex,
+		};
 
-	const response = await fetch(URL, {
-		body: JSON.stringify(data),
-		method: "POST",
-		headers: { "Content-Type": "application/json" }
-	});
-	return await response.json();
+		const response = await fetch(URL, {
+			body: JSON.stringify(data),
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+		});
+		return await response.json();
+	}
 }
-
-export async function runTs(script: string): Promise<DenoTownResponse> {
-	const URL = "https://deno.town/anon";
-	const data = {
-		module: Buffer.from(script).toString("base64")
-	};
-
-	const response = await fetch(URL, {
-		body: JSON.stringify(data),
-		method: "POST"
-	});
-	return await response.json();
-}
-
 
 export function getLanguage(language: string): Language {
 	const supportedLanguages = [
@@ -102,7 +93,12 @@ export function getLanguage(language: string): Language {
 		{
 			name: "nodejs",
 			alias: ["js", "javascript"],
-			versionIndex: 3
+			versionIndex: 3,
+		},
+		{
+			name: "typescript",
+			alias: ["ts", "typescript"],
+			versionIndex: 0,
 		},
 		{
 			name: "kotlin",

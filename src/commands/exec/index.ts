@@ -1,6 +1,7 @@
 import { Command } from "discord.js";
 
-import {run, runTs} from "./run";
+import { run } from "./run";
+import { DenoTownResponse, JDoodleResponse } from "./types";
 
 const command: Command = {
 	name: "exec",
@@ -22,12 +23,12 @@ const command: Command = {
 			let response, output, time, error;
 
 			if (isTypescript) {
-				response = await runTs(script);
+				response = await run("typescript", script) as DenoTownResponse;
 				output = response.stdout;
 				time = `${response.ms}ms`;
 				error = response.stderr === "Compile file:///tmp/mod.tsx\n" ? "" : response.stderr.replace(/(<([^>]+)>)/gi, "");
 			} else {
-				response = await run(language, script);
+				response = await run(language, script) as JDoodleResponse;
 				output = response.output;
 				time = response.cpuTime;
 				error = response.error;
