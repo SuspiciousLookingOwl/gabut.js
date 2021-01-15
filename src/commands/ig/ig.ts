@@ -99,7 +99,6 @@ const getUserData = async (username: string) => {
 			headers: REQUEST_PARAMETERS.headers,
 		})
 	).json();
-	console.log(GQL);
 	if (GQL) {
 		const user = GQL.graphql.user;
 		return {
