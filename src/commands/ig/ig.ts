@@ -39,7 +39,7 @@ const getSessionId = async (username: string, password: string): Promise<string>
 			if (env.INSTAGRAM_SESSION_ID) return resolve(env.INSTAGRAM_SESSION_ID);
 
 			// Open Browser and Page, then go to login page
-			const browser = await puppeteer.launch();
+			const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
 			const page = await browser.newPage();
 			await page.goto("https://www.instagram.com/accounts/login/");
 
