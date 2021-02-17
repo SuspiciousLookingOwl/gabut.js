@@ -11,9 +11,10 @@ module.exports = {
 	},
 	plugins: ["@typescript-eslint"],
 	rules: {
-		indent: ["error", "tab"],
+		indent: ["off", "tab"],
 		"linebreak-style": ["error", "unix"],
 		quotes: ["error", "double"],
 		semi: ["error", "always"],
+		"no-mixed-spaces-and-tabs": ["off"],
 	},
 };
