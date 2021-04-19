@@ -80,7 +80,7 @@ export function getLanguage(language: string): Language {
 		},
 		{
 			name: "csharp",
-			alias: ["c#", "csharp"],
+			alias: ["c#", "csharp", "cs"],
 			versionIndex: 3,
 		},
 		{
