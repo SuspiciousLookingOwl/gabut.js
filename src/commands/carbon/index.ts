@@ -23,7 +23,8 @@ const command: Command = {
 
 		const page = await browser.newPage();
 		await page.setViewport({ width: 3840, height: 2160, deviceScaleFactor: 2 });
-		await page.goto(`https://carbon.now.sh/?code=${encodeURIComponent(script)}`);
+		const query = new URLSearchParams({ code: script, bg: "rgba(29, 31, 32, 1)" }).toString();
+		await page.goto(`https://carbon.now.sh/?${query}`);
 		await page.waitForSelector(".CodeMirror__container");
 		const element = await page.$(".CodeMirror__container");
 
