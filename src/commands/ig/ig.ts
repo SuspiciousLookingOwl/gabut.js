@@ -1,9 +1,9 @@
 // From https://github.com/EdouardCourty/user-instagram
 import fetch from "node-fetch";
-import puppeteer from "puppeteer";
 import fs from "fs";
 import { promisify } from "util";
 import dotenv from "dotenv";
+import shared from "../../common/shared";
 
 const normalizeUrl = (string: string) => {
 	if (!string.match(/instagram\.com\/[^/]*/)) {
@@ -39,8 +39,7 @@ const getSessionId = async (username: string, password: string): Promise<string>
 			if (env.INSTAGRAM_SESSION_ID) return resolve(env.INSTAGRAM_SESSION_ID);
 
 			// Open Browser and Page, then go to login page
-			const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
-			const page = await browser.newPage();
+			const page = await shared.browser.newPage();
 			await page.goto("https://www.instagram.com/accounts/login/");
 
 			//  Create listener and listen for received cookie
@@ -57,7 +56,6 @@ const getSessionId = async (username: string, password: string): Promise<string>
 				const sessionId = cookie.split("sessionid=")[1].split(";")[0];
 				env.INSTAGRAM_SESSION_ID = sessionId;
 				await writeFile(".env", await stringifyEnv(env));
-				await browser.close();
 				return resolve(env.INSTAGRAM_SESSION_ID);
 			});
 

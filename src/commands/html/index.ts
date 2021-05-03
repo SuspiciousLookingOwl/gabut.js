@@ -1,14 +1,8 @@
 import { Message } from "discord.js";
-import puppeteer from "puppeteer";
 import fs from "fs";
 import { promisify } from "util";
 import fetch from "node-fetch";
-
-let browser: puppeteer.Browser;
-
-(async () => {
-	browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
-})();
+import shared from "../../common/shared";
 
 export = {
 	name: "html",
@@ -42,7 +36,7 @@ export = {
 				await writeFile(`${__dirname}/${random}.html`, html);
 			}
 
-			const page = await browser.newPage();
+			const page = await shared.browser.newPage();
 
 			await page.setViewport({
 				width,

@@ -1,6 +1,8 @@
 import fs from "fs";
 import Discord, { Command } from "discord.js";
 import "dotenv/config";
+import puppeteer from "puppeteer";
+import shared from "./common/shared";
 
 const PREFIX = process.env.PREFIX as string;
 const TOKEN = process.env.TOKEN as string;
@@ -54,4 +56,7 @@ client.on("message", async (message) => {
 	}
 });
 
-client.login(TOKEN);
+(async () => {
+	shared.browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
+	client.login(TOKEN);
+})();

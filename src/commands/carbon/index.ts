@@ -1,13 +1,7 @@
 import { Command } from "discord.js";
-import puppeteer from "puppeteer";
 import { promisify } from "util";
 import fs from "fs";
-
-let browser: puppeteer.Browser;
-
-(async () => {
-	browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
-})();
+import shared from "../../common/shared";
 
 const command: Command = {
 	name: "carbon",
@@ -21,7 +15,7 @@ const command: Command = {
 		script = script.slice(language.length);
 		const unlink = promisify(fs.unlink);
 
-		const page = await browser.newPage();
+		const page = await shared.browser.newPage();
 		await page.setViewport({ width: 3840, height: 2160, deviceScaleFactor: 2 });
 		const query = new URLSearchParams({ code: script, bg: "rgba(29, 31, 32, 1)" }).toString();
 		await page.goto(`https://carbon.now.sh/?${query}`);
