@@ -1,6 +1,5 @@
 import { Command } from "discord.js";
-import { promisify } from "util";
-import fs from "fs";
+import { promises as fs } from "fs";
 import ffmpeg from "fluent-ffmpeg";
 import ytdl from "ytdl-core";
 import scrapeYt from "scrape-yt";
@@ -24,7 +23,6 @@ const command: Command = {
 		if (!video[0].duration || video[0].duration > 600)
 			return message.channel.send("Video can't be longer than 10 minutes");
 
-		const unlink = promisify(fs.unlink);
 		const filename = video[0].title.substring(0, 48) + ".mp3";
 
 		const stream = ytdl(url, { filter: "audioonly" });
@@ -44,7 +42,7 @@ const command: Command = {
 						throw new Error(`Something went wrong! Error: ${err.message}`);
 					}
 				} finally {
-					unlink(`${__dirname}/${filename}`);
+					await fs.unlink(`${__dirname}/${filename}`);
 				}
 			})
 			.audioBitrate(96)

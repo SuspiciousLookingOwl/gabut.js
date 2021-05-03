@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
-import fs from "fs";
-import { promisify } from "util";
+import { promises as fs } from "fs";
 import fetch from "node-fetch";
 import shared from "../../common/shared";
 
@@ -24,8 +23,6 @@ export = {
 			html = script.slice(language.length);
 		}
 
-		const writeFile = promisify(fs.writeFile);
-		const unlink = promisify(fs.unlink);
 		const width = parseInt(args.shift() || "") || 1920;
 		const height = parseInt(args.shift() || "") || 1080;
 		const random = Math.random().toString(36).substring(7);
@@ -33,7 +30,7 @@ export = {
 		try {
 			if (!url) {
 				url = `file://${__dirname}/${random}.html`;
-				await writeFile(`${__dirname}/${random}.html`, html);
+				await fs.writeFile(`${__dirname}/${random}.html`, html);
 			}
 
 			const page = await shared.browser.newPage();
@@ -52,8 +49,8 @@ export = {
 		} catch (err) {
 			throw new Error(err);
 		} finally {
-			if (!url) await unlink(`${__dirname}/${random}.html`);
-			await unlink(`${__dirname}/${random}.png`);
+			if (!url) await fs.unlink(`${__dirname}/${random}.html`);
+			await fs.unlink(`${__dirname}/${random}.png`);
 		}
 	},
 };

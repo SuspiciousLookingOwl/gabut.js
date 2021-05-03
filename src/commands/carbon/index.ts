@@ -1,6 +1,5 @@
 import { Command } from "discord.js";
-import { promisify } from "util";
-import fs from "fs";
+import { promises as fs } from "fs";
 import shared from "../../common/shared";
 
 const command: Command = {
@@ -13,7 +12,6 @@ const command: Command = {
 			.trim();
 		const language = script.split(/\r?\n/)[0];
 		script = script.slice(language.length);
-		const unlink = promisify(fs.unlink);
 
 		const page = await shared.browser.newPage();
 		await page.setViewport({ width: 3840, height: 2160, deviceScaleFactor: 2 });
@@ -29,7 +27,7 @@ const command: Command = {
 		await message.channel.send("", {
 			files: [`./${random}.png`],
 		});
-		await unlink(`./${random}.png`);
+		await fs.unlink(`./${random}.png`);
 		page.close();
 	},
 };

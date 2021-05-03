@@ -1,7 +1,6 @@
 // From https://github.com/EdouardCourty/user-instagram
 import fetch from "node-fetch";
-import fs from "fs";
-import { promisify } from "util";
+import { promises as fs } from "fs";
 import dotenv from "dotenv";
 import shared from "../../common/shared";
 
@@ -33,7 +32,6 @@ const stringifyEnv = async (obj: dotenv.DotenvParseOutput) => {
 const getSessionId = async (username: string, password: string): Promise<string> => {
 	return new Promise((resolve, reject) => {
 		(async () => {
-			const writeFile = promisify(fs.writeFile);
 			const env = dotenv.config().parsed;
 			if (!env) return reject(new Error(".env file not found"));
 			if (env.INSTAGRAM_SESSION_ID) return resolve(env.INSTAGRAM_SESSION_ID);
@@ -55,7 +53,7 @@ const getSessionId = async (username: string, password: string): Promise<string>
 				const cookie = response.headers["set-cookie"];
 				const sessionId = cookie.split("sessionid=")[1].split(";")[0];
 				env.INSTAGRAM_SESSION_ID = sessionId;
-				await writeFile(".env", await stringifyEnv(env));
+				await fs.writeFile(".env", await stringifyEnv(env));
 				return resolve(env.INSTAGRAM_SESSION_ID);
 			});
 
