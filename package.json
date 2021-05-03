@@ -26,6 +26,7 @@
 		"nodeno-town": "^1.0.2",
 		"pretty-bytes": "^5.4.1",
 		"puppeteer": "^5.2.1",
+		"puppeteer-screen-recorder": "^1.1.9",
 		"scrape-yt": "^1.4.7",
 		"sharp": "^0.26.0",
 		"ytdl-core": "^4.1.4"
