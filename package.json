@@ -29,6 +29,7 @@
 		"puppeteer-screen-recorder": "^1.1.9",
 		"scrape-yt": "^1.4.7",
 		"sharp": "^0.26.0",
+		"table": "^6.7.0",
 		"ytdl-core": "^4.1.4"
 	},
 	"devDependencies": {
