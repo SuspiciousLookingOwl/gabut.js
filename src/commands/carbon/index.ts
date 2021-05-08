@@ -1,4 +1,5 @@
 import { Command } from "discord.js";
+import { URLSearchParams } from "url";
 import { promises as fs } from "fs";
 import shared from "../../common/shared";
 
