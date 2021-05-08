@@ -21,6 +21,7 @@
 		"dotenv": "^8.2.0",
 		"emmet": "^2.2.1",
 		"fluent-ffmpeg": "^2.1.2",
+		"form-data": "^4.0.0",
 		"math-expression-evaluator": "^1.3.7",
 		"node-tesseract-ocr": "^2.0.0",
 		"nodeno-town": "^1.0.2",
