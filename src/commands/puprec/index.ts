@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import { PuppeteerScreenRecorder, PuppeteerScreenRecorderOptions } from "puppeteer-screen-recorder";
 
 import shared from "../../common/shared";
+import extractCode from "../../common/extractCode";
 import commandParser from "./commandParser";
 import runner from "./runner";
 
@@ -10,11 +11,8 @@ const command: Command = {
 	name: "puprec",
 	description: "rec open web progress",
 	async execute(message) {
-		const script = message.cleanContent
-			.replace(`${process.env.PREFIX}${this.name}` as string, "")
-			.replace(/```/g, "")
-			.trim();
-		const commands = commandParser(script);
+		const [script] = extractCode(message.cleanContent);
+		const commands = commandParser(script.content);
 
 		const page = await shared.browser.newPage();
 		await page.setViewport({

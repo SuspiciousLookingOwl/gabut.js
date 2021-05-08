@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import { promises as fs } from "fs";
 import fetch from "node-fetch";
+import extractCode from "../../common/extractCode";
 import shared from "../../common/shared";
 
 export = {
@@ -17,10 +18,9 @@ export = {
 		} else if (args.length > 0 && args[0].startsWith("http")) {
 			url = args.shift() || "";
 		} else {
-			const script = message.cleanContent.split("```")[1] || "";
+			const [script] = extractCode(message.cleanContent);
 			if (!script) return;
-			const language = script.split(/\r?\n/)[0];
-			html = script.slice(language.length);
+			html = script.content;
 		}
 
 		const width = parseInt(args.shift() || "") || 1920;

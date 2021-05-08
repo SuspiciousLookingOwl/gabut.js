@@ -1,4 +1,5 @@
 import { Command } from "discord.js";
+import extractCode from "../../common/extractCode";
 
 import { run } from "./run";
 import { DenoTownResponse, JDoodleResponse } from "./types";
@@ -13,12 +14,7 @@ const command: Command = {
 		},
 	],
 	async execute(message) {
-		let script = message.cleanContent
-			.replace(`${process.env.PREFIX}${this.name}` as string, "")
-			.replace(/```/g, "")
-			.trim();
-		const language = script.split(/\r?\n/)[0];
-		script = script.slice(language.length);
+		const [{ language, content: script }] = extractCode(message.cleanContent);
 
 		try {
 			const isTypescript = ["ts", "typescript"].includes(language.toLowerCase());
