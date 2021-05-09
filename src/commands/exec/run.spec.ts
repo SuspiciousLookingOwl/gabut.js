@@ -1,6 +1,6 @@
 import { getLanguage, run } from "./run";
 import "dotenv/config";
-import { DenoTownResponse } from "./types";
+import { DenoTownResponse } from "./interfaces";
 
 test("Test run invalid language", async () => {
 	expect(run("wilson", "console.log(1);")).rejects.toThrow();

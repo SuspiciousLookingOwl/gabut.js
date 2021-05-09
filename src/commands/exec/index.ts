@@ -2,7 +2,7 @@ import { Command } from "discord.js";
 import extractCode from "../../common/extractCode";
 
 import { run } from "./run";
-import { DenoTownResponse, JDoodleResponse } from "./types";
+import { DenoTownResponse, JDoodleResponse } from "./interfaces";
 
 const command: Command = {
 	name: "exec",

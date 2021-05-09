@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { DefinitionResult } from "./types";
+import { DefinitionResult } from "./interfaces";
 
 const URL = "https://api.dictionaryapi.dev/api/v2/entries/en";
 

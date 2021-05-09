@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { DenoTownResponse, JDoodleResponse, Language } from "./types";
+import { DenoTownResponse, JDoodleResponse, Language } from "./interfaces";
 import deno from "nodeno-town";
 
 export async function run(
