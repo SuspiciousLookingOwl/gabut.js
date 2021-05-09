@@ -13,10 +13,8 @@ export async function run(
 	if (detectedLanguage.name === "typescript") {
 		return await deno(script);
 	} else {
-		const URL = "https://api.jdoodle.com/v1/execute";
+		const URL = "https://www.jdoodle.com/engine/execute";
 		const data = {
-			clientId: process.env.JDOODLE_CLIENT_ID,
-			clientSecret: process.env.JDOODLE_CLIENT_SECRET,
 			script,
 			language: detectedLanguage.name,
 			versionIndex: detectedLanguage.versionIndex,
@@ -25,8 +23,13 @@ export async function run(
 		const response = await fetch(URL, {
 			body: JSON.stringify(data),
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers: {
+				"Content-Type": "application/json",
+				"x-requested-with": "XMLHttpRequest",
+				referer: "https://www.jdoodle.com",
+			},
 		});
+
 		return await response.json();
 	}
 }
