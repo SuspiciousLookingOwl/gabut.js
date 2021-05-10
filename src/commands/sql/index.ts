@@ -15,7 +15,7 @@ const command: Command = {
 
 		const results = await sql(database, schema.content, query.content);
 		for (const result of results) {
-			const data = table([result?.fields || [], result?.values || []]);
+			const data = table([result?.fields || [], ...(result?.values || [])]);
 			await message.channel.send("```\r\n" + data + "\r\n```");
 		}
 	},
