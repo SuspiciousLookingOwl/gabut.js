@@ -19,7 +19,9 @@ export default async (
 
 	const body = (await response.json()) as Result;
 	const schemaError = body.schema.statements.find((s) => s.error);
-	if (schemaError) throw new Error(`Schema Error: ${schemaError}`);
+	if (schemaError) throw new Error("Schema Error:\r\n ```" + schemaError.error + "```");
+	const queryError = body.query.statements.find((s) => s.error);
+	if (queryError) throw new Error("Query Error:\r\n ```" + queryError.error + "```");
 
 	return body.query.statements.map((s) => s.results);
 };
