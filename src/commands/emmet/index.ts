@@ -8,7 +8,7 @@ const command: Command = {
 		const emmet = args.join(" ").replace(/\\/g, "");
 		if (!emmet) return;
 		try {
-			await message.channel.send(`\`\`\`html\r\n${expand(emmet)}\`\`\``);
+			await message.channel.send("```html\r\n" + expand(emmet) + "```");
 		} catch (err) {
 			throw new Error("Invalid Emmet");
 		}
