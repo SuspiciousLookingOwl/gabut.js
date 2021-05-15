@@ -1,5 +1,4 @@
 module.exports = {
-	verbose: true,
-	rootDir: "./dist",
+	preset: "ts-jest",
 	testEnvironment: "node",
 };
