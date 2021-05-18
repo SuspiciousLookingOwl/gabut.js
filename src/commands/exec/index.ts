@@ -13,8 +13,10 @@ const command: Command = {
 			description: "Code to execute with code block (```)",
 		},
 	],
-	async execute(message) {
+	async execute(message, args) {
 		const [{ language, content: script }] = extractCode(message.cleanContent);
+
+		const wrapInCodeBlock = args[0] !== "0" && args[0] !== "false";
 
 		try {
 			const isTypescript = ["ts", "typescript"].includes(language.toLowerCase());
@@ -45,7 +47,10 @@ const command: Command = {
 					`Output too long (${output.length}) <:hanna:596068342431744020>`
 				);
 
-			await message.channel.send(`${output.trim()} \r\n\r\n\`Execution time: ${time}\``);
+			let responseString = output.trim();
+			if (wrapInCodeBlock) responseString = "```\r\n" + output.trim() + "\r\n```";
+
+			await message.channel.send(`${responseString}\r\n\r\n Execution time: \`${time}\``);
 		} catch (err) {
 			throw new Error("Failed to execute code");
 		}
