@@ -12,7 +12,7 @@ if (fs.existsSync(newCommand)) throw new Error("Command Exists");
 fs.mkdirSync(newCommand, { recursive: true });
 
 copyTemplate("template/command/index.ts", newCommandFile, camelizedCommandName, commandDescription);
-copyTemplate("template/command/index.spec.ts", `${newCommand}/index.spec.ts`);
+copyTemplate("template/command/command.spec.ts", `${newCommand}/command.spec.ts`);
 
 function copyTemplate(src, path, commandName = "", commandDescription = "") {
 	fs.readFile(src, "utf-8", (err, data) => {
