@@ -27,10 +27,7 @@ client.once("ready", () => {
 client.on("message", async (message) => {
 	if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
-	const args = message.content
-		.slice(PREFIX.length)
-		.trim()
-		.split(/\r?\n| +/);
+	const args = message.content.slice(PREFIX.length).trim().split(/ +/);
 	const commandName = (args.shift() as string).toLowerCase();
 
 	if (!client.commands.has(commandName)) return;
