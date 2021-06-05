@@ -35,7 +35,7 @@
 		"scrape-yt": "^1.4.7",
 		"sharp": "^0.26.0",
 		"table": "^6.7.0",
-		"ytdl-core": "^4.1.4"
+		"ytdl-core": "^4.8.2"
 	},
 	"devDependencies": {
 		"@types/color": "^3.0.1",
