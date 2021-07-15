@@ -10,10 +10,12 @@ export = {
 		if (Array.from(message.attachments).length === 0) return;
 
 		const image = Array.from(message.attachments)[0][1];
-		const imageExtension = image.url.split(".")[image.url.split(".").length - 1];
-		const quality = parseInt(args.shift() || "85");
+		const splitUrl = image.url.split(".");
 
-		if (![".jpg", ".jpeg", ".png"].includes(`.${imageExtension}`)) return;
+		const quality = parseInt(args.shift() || "85");
+		const imageExtension = args.shift() || splitUrl[splitUrl.length - 1];
+
+		if (!["jpg", "jpeg", "png"].includes(imageExtension)) return;
 
 		const pleaseWaitMessage = await message.channel.send("Compressing, please wait!");
 
