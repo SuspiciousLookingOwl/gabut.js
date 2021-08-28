@@ -8,5 +8,13 @@ export default async function define(string: string): Promise<DefinitionResult[]
 
 	if (response.status !== 200) throw new Error("Definition not found");
 
-	return await response.json();
+	const data = (await response.json()) as DefinitionResult[];
+	data.forEach((d) => {
+		d.phonetics = d.phonetics.map((p) => {
+			p.audio = p.audio.startsWith("http") ? p.audio : `https:${p.audio}`;
+			return p;
+		});
+	});
+
+	return data;
 }
