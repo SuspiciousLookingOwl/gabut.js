@@ -59,7 +59,23 @@ client.on("messageCreate", async (message) => {
 		// Executing command dynamically by command name
 		await command.execute(message, args);
 	} catch (error) {
-		await message.channel.send(`Failed to execute the command: ${error.message}`);
+		await message.channel.send(`Failed to execute the command: ${(error as Error).message}`);
+	}
+});
+
+client.on("interactionCreate", async (interaction) => {
+	if (!interaction.isButton()) return;
+	const commands = [...client.commands.values()];
+	const customId = interaction.customId;
+	const prefixId = customId.split("/").shift();
+
+	const command = commands.find((command) => command.buttonInteractionIdPrefix === prefixId);
+	if (!command?.buttonInteraction) return;
+
+	try {
+		await command.buttonInteraction(interaction);
+	} catch (error) {
+		await interaction.channel?.send(`Failed to execute the command: ${(error as Error).message}`);
 	}
 });
 

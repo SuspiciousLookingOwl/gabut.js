@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Collection } from "discord.js";
 
 type CommandArgs = {
 	name: string;
@@ -7,7 +7,7 @@ type CommandArgs = {
 
 declare module "discord.js" {
 	export interface Client {
-		commands: Collection<unknown, Command>;
+		commands: Collection<string, Command>;
 	}
 
 	export interface Command {
@@ -18,5 +18,7 @@ declare module "discord.js" {
 		allowedUsers?: string[];
 		allowedGuilds?: string[];
 		execute: (message: Message, args: string[]) => Promise<unknown>;
+		buttonInteractionIdPrefix?: string;
+		buttonInteraction?: (interaction: ButtonInteraction) => Promise<unknown>;
 	}
 }
