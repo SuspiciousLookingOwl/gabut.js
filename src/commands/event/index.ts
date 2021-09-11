@@ -42,6 +42,8 @@ const command: Command = {
 			].join("\r\n"),
 			components: [row],
 		});
+
+		await message.delete();
 	},
 	async buttonInteraction(interaction: ButtonInteraction) {
 		const message = interaction.message as Message;
