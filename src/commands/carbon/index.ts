@@ -21,7 +21,7 @@ const command: Command = {
 		await element?.screenshot({
 			path: `./${random}.png`,
 		});
-		await message.channel.send("", {
+		await message.channel.send({
 			files: [`./${random}.png`],
 		});
 		await fs.unlink(`./${random}.png`);

@@ -19,6 +19,7 @@ const command: Command = {
 		try {
 			const audio = [];
 			const definitions = await define(string);
+			const embeds: MessageEmbed[] = [];
 			for (const definition of definitions) {
 				const embed = new MessageEmbed();
 
@@ -45,8 +46,10 @@ const command: Command = {
 
 				embed.setFooter("Powered by dictionaryapi.dev");
 				audio.push(...definition.phonetics.map((p) => p.audio));
-				await message.channel.send(embed);
+				embeds.push(embed);
 			}
+
+			await message.channel.send({ embeds });
 			await message.channel.send({
 				files: Array.from(new Set(audio)),
 			});

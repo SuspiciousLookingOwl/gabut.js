@@ -31,11 +31,12 @@ const command: Command = {
 		ffmpeg(stream)
 			.on("end", async () => {
 				try {
-					const information = `<@!${message.author.id}> Downloaded in ${
-						(Date.now() - start) / 1000
-					}s`;
-					await message.channel.send(information, { files: [`${__dirname}/${filename}`] });
-				} catch (err) {
+					const content = `<@!${message.author.id}> Downloaded in ${(Date.now() - start) / 1000}s`;
+					await message.channel.send({
+						content,
+						files: [`${__dirname}/${filename}`],
+					});
+				} catch (err: any) {
 					if (err.message === "Request entity too large") {
 						throw new Error("File size is too big :frowning:");
 					} else {

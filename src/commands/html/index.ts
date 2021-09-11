@@ -8,7 +8,7 @@ export = {
 	name: "html",
 	description: "Send image preview from HTML",
 	async execute(message: Message, args: string[]): Promise<void> {
-		const attachments = message.attachments.array();
+		const attachments = [...message.attachments.values()];
 		let html = "";
 		let url = "";
 
@@ -44,9 +44,9 @@ export = {
 				path: `${__dirname}/${random}.png`,
 			});
 
-			await message.channel.send("", { files: [`${__dirname}/${random}.png`] });
+			await message.channel.send({ files: [`${__dirname}/${random}.png`] });
 			await page.close();
-		} catch (err) {
+		} catch (err: any) {
 			throw new Error(err);
 		} finally {
 			if (!url) await fs.unlink(`${__dirname}/${random}.html`);
