@@ -9,15 +9,15 @@ const command: Command = {
 			components: [
 				new MessageButton({
 					customId: `${this.buttonInteractionIdPrefix}/yes`,
-					label: "Yes",
+					label: "Going",
 					style: "SUCCESS",
 					emoji: "✔",
 				}),
 				new MessageButton({
 					customId: `${this.buttonInteractionIdPrefix}/no`,
-					label: "No",
+					label: "Not Going",
 					style: "DANGER",
-					emoji: "❌",
+					emoji: "✖",
 				}),
 				new MessageButton({
 					customId: `${this.buttonInteractionIdPrefix}/maybe`,
@@ -28,7 +28,7 @@ const command: Command = {
 			],
 		});
 
-		const contentSplit = message.cleanContent.split(this.name);
+		const contentSplit = message.content.split(this.name);
 		contentSplit.shift();
 		const content = contentSplit.join(this.name).trim();
 
