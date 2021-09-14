@@ -7,7 +7,8 @@ const command: Command = {
 	description: "Translate sentences",
 	async execute(message, args) {
 		const targetLanguage = args.shift();
-		const string = args.join(" ");
+		const content = message.content.split(/\s/g);
+		const string = content.slice(2).join(" ");
 
 		if (!targetLanguage || !string) return;
 
