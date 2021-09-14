@@ -10,11 +10,9 @@ const command: Command = {
 		const response = await mongo(config.content, query.content);
 
 		try {
-			await message.channel.send(
-				"```json\r\n" + JSON.stringify(JSON.parse(response), null, 2) + "```"
-			);
+			await message.reply("```json\r\n" + JSON.stringify(JSON.parse(response), null, 2) + "```");
 		} catch (err) {
-			await message.channel.send("```" + response + "```");
+			await message.reply("```" + response + "```");
 		}
 	},
 };

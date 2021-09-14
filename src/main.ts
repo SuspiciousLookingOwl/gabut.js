@@ -52,14 +52,14 @@ client.on("messageCreate", async (message) => {
 			!command.allowedGuilds?.includes(message.guild.id) &&
 			!command.allowedUsers?.includes(message.author.id)
 		) {
-			await message.channel.send("No permission to run this command");
+			await message.reply("No permission to run this command");
 			return;
 		}
 
 		// Executing command dynamically by command name
 		await command.execute(message, args);
 	} catch (error) {
-		await message.channel.send(`Failed to execute the command: ${(error as Error).message}`);
+		await message.reply(`Failed to execute the command: ${(error as Error).message}`);
 	}
 });
 

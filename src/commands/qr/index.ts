@@ -12,7 +12,7 @@ const command: Command = {
 			buffer,
 			content.replace(/[^a-z0-9]/gi, "").substring(0, 16) + ".png"
 		);
-		await message.channel.send({
+		await message.reply({
 			files: [attachment],
 		});
 	},

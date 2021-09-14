@@ -49,8 +49,8 @@ const command: Command = {
 				embeds.push(embed);
 			}
 
-			await message.channel.send({ embeds });
-			await message.channel.send({
+			await message.reply({ embeds });
+			await message.reply({
 				files: Array.from(new Set(audio)),
 			});
 		} catch (err) {

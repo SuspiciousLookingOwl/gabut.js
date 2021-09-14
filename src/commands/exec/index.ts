@@ -39,18 +39,18 @@ const command: Command = {
 			}
 
 			if (error)
-				return await message.channel.send(
+				return await message.reply(
 					`Failed to execute <:hanna:596068342431744020>, error: \r\n\r\n${error.trim()}`
 				);
 			if (output.length > 1950)
-				return await message.channel.send(
+				return await message.reply(
 					`Output too long (${output.length}) <:hanna:596068342431744020>`
 				);
 
 			let responseString = output.trim();
 			if (wrapInCodeBlock) responseString = "```\r\n" + output.trim() + "\r\n```";
 
-			await message.channel.send(`${responseString}\r\n\r\n Execution time: \`${time}\``);
+			await message.reply(`${responseString}\r\n\r\n Execution time: \`${time}\``);
 		} catch (err) {
 			throw new Error("Failed to execute code");
 		}

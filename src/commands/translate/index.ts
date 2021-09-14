@@ -14,8 +14,8 @@ const command: Command = {
 
 		try {
 			const translation = await translate(string, targetLanguage);
-			if (!translation) return await message.channel.send("No Translation Found.");
-			await message.channel.send(translation);
+			if (!translation) return await message.reply("No Translation Found.");
+			await message.reply(translation);
 		} catch (err: any) {
 			if (err.code === 400) {
 				throw new Error("Invalid Language");

@@ -17,7 +17,7 @@ export = {
 
 		if (!["jpg", "jpeg", "png"].includes(imageExtension)) return;
 
-		const pleaseWaitMessage = await message.channel.send("Compressing, please wait!");
+		const pleaseWaitMessage = await message.reply("Compressing, please wait!");
 
 		const start = new Date().getTime();
 		const input = await (
@@ -43,7 +43,7 @@ export = {
 		content += `Old Size: **__${oldSize}__**\r\n`;
 		content += `New Size: **__${newSize}__**\r\n`;
 
-		await message.channel.send({
+		await message.reply({
 			content,
 			files: [
 				{

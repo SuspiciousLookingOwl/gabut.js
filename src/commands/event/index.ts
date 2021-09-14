@@ -32,7 +32,7 @@ const command: Command = {
 		contentSplit.shift();
 		const content = contentSplit.join(this.name).trim();
 
-		await message.channel.send({
+		await message.reply({
 			content: [
 				content,
 				"",

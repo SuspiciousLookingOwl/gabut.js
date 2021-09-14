@@ -8,7 +8,7 @@ const command: Command = {
 	async execute(message) {
 		const [json] = extractCode(message.cleanContent);
 		const data = table(JSON.parse(json.content));
-		await message.channel.send("```" + data + "```");
+		await message.reply("```" + data + "```");
 	},
 };
 

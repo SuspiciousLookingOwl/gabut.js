@@ -14,7 +14,7 @@ const command: Command = {
 		ctx.fillRect(0, 0, 2000, 200);
 
 		const attachment = new MessageAttachment(canvas.toBuffer(), color.hex() + ".png");
-		await message.channel.send({ files: [attachment] });
+		await message.reply({ files: [attachment] });
 	},
 };
 

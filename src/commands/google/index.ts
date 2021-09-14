@@ -12,7 +12,7 @@ const command: Command = {
 		},
 	],
 	async execute(message, args) {
-		await message.channel.send(google(args.join(" ")));
+		await message.reply(google(args.join(" ")));
 	},
 };
 

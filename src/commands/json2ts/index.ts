@@ -11,7 +11,7 @@ const command: Command = {
 		for (const script of scripts) {
 			try {
 				const ts = json2ts(JSON.parse(script.content));
-				message.channel.send("```ts\r\n" + ts.join("\r\n\r\n") + "\r\n```");
+				message.reply("```ts\r\n" + ts.join("\r\n\r\n") + "\r\n```");
 			} catch (err) {
 				continue;
 			}

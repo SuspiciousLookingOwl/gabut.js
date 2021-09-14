@@ -44,7 +44,7 @@ export = {
 				path: `${__dirname}/${random}.png`,
 			});
 
-			await message.channel.send({ files: [`${__dirname}/${random}.png`] });
+			await message.reply({ files: [`${__dirname}/${random}.png`] });
 			await page.close();
 		} catch (err: any) {
 			throw new Error(err);

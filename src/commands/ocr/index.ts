@@ -18,8 +18,8 @@ const command: Command = {
 		const text = await tesseract.recognize(filePath, {
 			lang: "eng",
 		});
-		if (text) await message.channel.send(text.trim().replace(/(\n\s*?\n)\s*\n/, "$1"));
-		else await message.channel.send("`Text Not Found`");
+		if (text) await message.reply(text.trim().replace(/(\n\s*?\n)\s*\n/, "$1"));
+		else await message.reply("`Text Not Found`");
 	},
 };
 

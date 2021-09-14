@@ -37,7 +37,7 @@ const command: Command = {
 			await runner(page, commands);
 			await recorder.stop();
 
-			await message.channel.send({ files: [path] });
+			await message.reply({ files: [path] });
 		} finally {
 			await page.close();
 			await fs.unlink(path);
