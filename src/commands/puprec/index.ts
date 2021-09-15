@@ -10,6 +10,7 @@ import runner from "./runner";
 const command: Command = {
 	name: "puprec",
 	description: "rec open web progress",
+	enabled: false,
 	async execute(message) {
 		const [script] = extractCode(message.cleanContent);
 		const commands = commandParser(script.content);
