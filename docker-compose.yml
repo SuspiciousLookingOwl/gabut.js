@@ -4,3 +4,8 @@ services:
     build: .
     env_file:
       - .env
+    volumes:
+      - tesseract_data:/usr/share/tesseract-ocr/
+volumes:
+  tesseract_data:
+    driver: local

@@ -9,7 +9,11 @@ RUN apt-get update && \
 	libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
 	ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 
+RUN apt-get install -yq tesseract-ocr libtesseract-dev
+
 COPY package*.json ./
+
+COPY yarn.lock ./
 
 RUN yarn install
 
