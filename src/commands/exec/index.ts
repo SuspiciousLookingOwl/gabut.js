@@ -1,4 +1,5 @@
 import { Command } from "discord.js";
+import fetch from "node-fetch";
 import extractCode from "../../common/extractCode";
 
 import { run } from "./run";
@@ -14,10 +15,24 @@ const command: Command = {
 		},
 	],
 	async execute(message, args) {
-		const [{ language, content: script }] = extractCode(message.cleanContent);
+		const [meta] = extractCode(message.cleanContent);
+		const attachments = [...message.attachments.values()];
+
+		let language;
+		let script;
+
+		if (meta) {
+			language = meta.language;
+			script = meta.content;
+		} else if (attachments.length) {
+			const file = await fetch(attachments[0].url);
+			script = await file.text();
+			language = attachments[0].url.split(".").pop() || "";
+		} else {
+			return;
+		}
 
 		const wrapInCodeBlock = args[0] !== "0" && args[0] !== "false";
-
 		try {
 			const isTypescript = ["ts", "typescript"].includes(language.toLowerCase());
 
