@@ -65,7 +65,7 @@ const command: Command = {
 			let responseString = output.trim();
 			if (wrapInCodeBlock) responseString = "```\r\n" + output.trim() + "\r\n```";
 
-			await message.reply(`${responseString}\r\n\r\n Execution time: \`${time}\``);
+			await message.reply(`${responseString}\r\nExecution time: \`${time}\``);
 		} catch (err) {
 			throw new Error("Failed to execute code");
 		}
