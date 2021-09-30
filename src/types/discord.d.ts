@@ -1,4 +1,4 @@
-import { Collection } from "discord.js";
+import "discord.js";
 
 type CommandArgs = {
 	name: string;
@@ -7,12 +7,13 @@ type CommandArgs = {
 
 declare module "discord.js" {
 	export interface Client {
-		commands: Collection<string, Command>;
+		commands: Command[];
 	}
 
 	export interface Command {
 		name: string;
 		description: string;
+		aliases?: string[];
 		args?: CommandArgs[];
 		enabled?: boolean;
 		allowedUsers?: string[];

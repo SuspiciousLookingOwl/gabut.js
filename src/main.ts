@@ -17,7 +17,7 @@ const client = new Discord.Client({
 		Discord.Intents.FLAGS.DIRECT_MESSAGES,
 	],
 });
-client.commands = new Discord.Collection();
+client.commands = [];
 
 // Dynamically reading command files from ./commands directory
 const commandFolders = fs.readdirSync("./dist/commands");
@@ -26,7 +26,7 @@ const commandFolders = fs.readdirSync("./dist/commands");
 for (const folder of commandFolders) {
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const command = require(`./commands/${folder}/index.js`);
-	client.commands.set(command.name, command);
+	client.commands.push(command.name, command);
 }
 
 client.once("ready", () => {
@@ -39,13 +39,12 @@ client.on("messageCreate", async (message) => {
 	const args = message.content.slice(PREFIX.length).trim().split(/\r?\n/)[0].split(/ +/);
 	const commandName = (args.shift() as string).toLowerCase();
 
-	if (!client.commands.has(commandName)) return;
+	const command = client.commands.find(
+		(c) => c.name === commandName || c.aliases?.includes(commandName)
+	);
+	if (!command || command.enabled === false || !message.guild) return;
 
 	try {
-		const command = client.commands.get(commandName) as Command;
-
-		if (command.enabled === false) return;
-
 		if (
 			(command.allowedGuilds || command.allowedUsers) &&
 			message.guild &&

@@ -3,7 +3,8 @@ import { Command } from "discord.js";
 import translate from "./translate";
 
 const command: Command = {
-	name: "tr",
+	name: "translate",
+	aliases: ["tr"],
 	description: "Translate sentences",
 	async execute(message, args) {
 		const targetLanguage = args.shift();
