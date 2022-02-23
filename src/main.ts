@@ -32,7 +32,7 @@ for (const folder of commandFolders) {
 client.once("ready", () => {
 	console.log("Ready!");
 });
-
+//
 client.on("messageCreate", async (message) => {
 	if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
