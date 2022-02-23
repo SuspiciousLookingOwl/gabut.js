@@ -6,7 +6,7 @@ const command: Command = {
 	description: "Evaluate Mathematic Expression",
 	async execute(message, args) {
 		try {
-			await message.reply(math.eval(args.join(" ")));
+			await message.reply(math.eval(args.join(" ")).toString());
 		} catch (err) {
 			throw new Error("Failed to evaluate Math expression");
 		}
