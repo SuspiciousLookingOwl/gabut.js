@@ -2,7 +2,9 @@ import { Command } from "discord.js";
 import { promises as fs } from "fs";
 import ffmpeg from "fluent-ffmpeg";
 import ytdl from "ytdl-core";
-import scrapeYt from "scrape-yt";
+import { Client } from "youtubei";
+
+const youtube = new Client();
 
 const command: Command = {
 	name: "ytdl",
@@ -18,7 +20,7 @@ const command: Command = {
 		if (!url) return;
 
 		const start = Date.now();
-		const video = await scrapeYt.search(url, { type: "video" });
+		const video = await youtube.search(url, { type: "video" });
 		if (video.length === 0) return message.reply("Video Not Found");
 		if (!video[0].duration || video[0].duration > 600)
 			return message.reply("Video can't be longer than 10 minutes");
